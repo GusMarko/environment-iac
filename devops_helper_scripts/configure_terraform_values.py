@@ -74,5 +74,5 @@ def get_aws_parameter(param_path, session):
 
 
 ########## START ##########
-if _name_ == "_main_":
+if __name__ == "__main__":
     main()
