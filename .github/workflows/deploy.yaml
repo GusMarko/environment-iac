@@ -12,26 +12,31 @@ env:
     AWS_REGION: ${{ secrets.AWS_REGION }}
 
 jobs:
-  build:
-    name: Set up terraform variables
+  DeployInfra:
+    name: Execute Terraform code
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - name: Use python
+      
+      - name: Setup Python
         uses: actions/setup-python@v4
         with:
           python-version: "3.11"
-
+          
       - name: Configure terraform values
         run: |
           cd devops_helper_scripts
           pip install boto3
           python3 configure_terraform_values.py
 
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v2
 
-      - name: Publish changed terraform configuration
-        uses: actions/upload-artifact@v2
-        with:
-          name: tf-artifact
-          path: ./iac
+      - name: Terraform Apply
+        run: |
+          cd iac
+          terraform init
+          terraform plan
+
+
 
