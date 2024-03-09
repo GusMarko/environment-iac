@@ -9,11 +9,9 @@ def main():
     env_name = get_environment()
     boto3_session = init_boto3_session()
     replace_tfvars(env_name, boto3_session)
-    # Output environment variables for further use in pipeline
-    print(f"##vso[task.setvariable variable=BuildEnvironment;isOutput=true]{env_name}")
 
 
-def replace_tfvars(env_name, boto3_session):
+def replace_tfvars(env, boto3_session):
     aws_region = os.environ.get("AWS_REGION")
     tf_role_credentials = get_aws_secret("/pipeline-user/credentials", boto3_session)
     access_key = tf_role_credentials["access_key"]
