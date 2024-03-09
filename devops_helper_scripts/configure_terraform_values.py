@@ -34,7 +34,7 @@ def replace_tfvars(env, boto3_session):
     backend_config = backend_config.replace("secret_key_placeholder", secret_key)
     backend_config = backend_config.replace("env_placeholder", env)
     with open(backend_config_path, "w") as f:
-        f.write(tfvars)
+        f.write(backend_config)
 
 
 def get_environment():
